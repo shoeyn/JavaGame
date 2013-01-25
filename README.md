@@ -1,4 +1,6 @@
-JavaGame-
-=========
+Tutorial Java Game - Tank Game (unconfirmed)
+================
 
-Java Game for Tutorial
+Specification:
+
+Additional Features:
