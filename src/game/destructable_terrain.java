@@ -1,6 +1,7 @@
 package game;
 
 import processing.core.*; 
+
 import java.util.*; 
 
 @SuppressWarnings("serial")
@@ -237,7 +238,7 @@ class Physics {
   float fixedDeltaTimeSeconds = (float)fixedDeltaTime / 1000.0f;
   int leftOverDeltaTime = 0;
 
-  List<PhysicsObj> objects;
+  ArrayList<PhysicsObj> objects;
   
   // Constructor
   Physics() {
@@ -711,7 +712,7 @@ interface RenderObj {
 // Holds a list of all "RenderObj"s, anything with a draw() method.
 class Renderer {
   
-  List<RenderObj> objects;
+  ArrayList<RenderObj> objects;
   
   Renderer() {
     objects = new ArrayList<RenderObj>(); 
@@ -754,27 +755,75 @@ public void showNormals() {
     }
   }
 }
+
 /* Terrain */
 // Provides methods for determining solid/empty pixels, and for removing/adding solid pixels 
 class Terrain {
   PImage img; // the terrain image
-  
+  int start; // Gibt die Starthöhe der Landschaft vor
+	int change; // Entscheidet, ob die Richtung der
+						// Landschaftsentwicklung geändert wird
+	int faktor = 1; // Entscheidet über Addition oder Substraktion
+	int last; // Speichert die letzte Höhe der letzten gezeichneten
+						// Linie
+	int plus; // Wieviel wird addiert oder subtraiert
+
+	// Variable zur Erzeugung einer Zufallszahl
+	Random rnd = new Random();
+
+	// Array zum Speichern der Höhenpunkte
   int destructionRes; // how wide is a static pixel
   
   // Constructor
   Terrain(PImage pic, int destructionRes) {
     this.destructionRes = destructionRes;
+
+    plus = 0;
     
-    // Copy pic over to img, replacing all pink (RGB: 255,0,255) pixels with transparent pixels
-    img = createImage(pic.width, pic.height, ARGB);
+	img = createImage(1000, 450, ARGB);
     img.loadPixels();
-    pic.loadPixels();
-    for (int i = 0; i < img.width * img.height; i++) {
-      if (red(pic.pixels[i]) == 255 && green(pic.pixels[i]) == 0 && blue(pic.pixels[i]) == 255) 
-        img.pixels[i] = color(0,0);
-      else
-        img.pixels[i] = pic.pixels[i];
-    }
+    
+    int[] map = new int[img.width + 1];
+
+	// initialize variable factor which decides if + or - value of plus
+	// faktor = 1; // Initializing start value of the surface
+	start = Math.abs(200 + (rnd.nextInt() % 20));
+
+	// Store start value on the first position in the array
+	map[img.width] = start;
+
+	// Loop to initialize all array positions
+	for (int i = img.width; i > 0; i--) {
+		// get the value before the actual position and store it in last
+		last = map[i];
+
+		// Decision if changing direction or not
+		change = Math.abs(rnd.nextInt() % 10);
+		// changing direction and possibly plus
+		if (change > 8) {
+			// Andern der Richtung
+			faktor = -(faktor);
+
+			// new plus (value 1 or 2)
+			plus = Math.abs(rnd.nextInt() % 2);
+		}
+
+		/* Make sure that surface values stay in a certain range */
+		if (last > 200) {
+			faktor = -1;
+		} else if (last < 100) {
+			// Andern der Richtung
+			faktor = 1;
+		}
+
+		// Calculate and store surface value on position i
+		map[i - 1] = last + (faktor * plus);
+		
+		for (int j = (img.width * img.height - i); j >= (img.width * img.height - i - map[i - 1] * img.width); j -= img.width) {
+			img.pixels[j] = color(0, 200, 0);
+		}
+	}
+    
     img.updatePixels();
   } 
   
@@ -841,6 +890,6 @@ class Terrain {
   public int sketchHeight() { return 450; }
   public String sketchRenderer() { return JAVA2D; }
   static public void main(String args[]) {
-    PApplet.main(new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "game.destructable_terrain" });
+    PApplet.main(new String[] { "--bgcolor=#666666", "--stop-color=#cccccc", "game.destructable_terrain" });
   }
 }
