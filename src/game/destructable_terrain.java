@@ -784,6 +784,10 @@ class Terrain {
     img.loadPixels();
     
     int[] map = new int[img.width + 1];
+    
+	int redvalue = 150;
+	int greenvalue = 75;
+	int bluevalue = 30;
 
 	// initialize variable factor which decides if + or - value of plus
 	// faktor = 1; // Initializing start value of the surface
@@ -819,8 +823,19 @@ class Terrain {
 		// Calculate and store surface value on position i
 		map[i - 1] = last + (faktor * plus);
 		
-		for (int j = (img.width * img.height - i); j >= (img.width * img.height - i - map[i - 1] * img.width); j -= img.width) {
-			img.pixels[j] = color(0, 200, 0);
+		redvalue += faktor * Math.abs(rnd.nextInt() % 2);
+		greenvalue += faktor * Math.abs(rnd.nextInt() % 2);
+		bluevalue += faktor * Math.abs(rnd.nextInt() % 2);
+		
+		int g = 0;
+		
+		for (int j = (img.width * img.height - i - map[i - 1] * img.width); j <= (img.width * img.height - i); j += img.width) {
+			if (g < 20) {
+				img.pixels[j] = color(0, 200, 0);
+			} else {
+				img.pixels[j] = color(redvalue, greenvalue, bluevalue);
+			}
+			g++;
 		}
 	}
     
