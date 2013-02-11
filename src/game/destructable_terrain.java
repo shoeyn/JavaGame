@@ -28,6 +28,11 @@ int translateY;
 public void setup() {
   size(600,450, JAVA2D);
   
+  if (frame != null)
+  {
+      frame.setTitle("Tank Wars");
+  }
+  
   // load our images for terrain and background
   bg = loadImage("bg/sky-blurry.png");
   
@@ -905,6 +910,6 @@ class Terrain {
   public int sketchHeight() { return 450; }
   public String sketchRenderer() { return JAVA2D; }
   static public void main(String args[]) {
-    PApplet.main(new String[] { "--bgcolor=#666666", "--stop-color=#cccccc", "game.destructable_terrain" });
+    PApplet.main(new String[] { "game.destructable_terrain" });
   }
 }
