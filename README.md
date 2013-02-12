@@ -16,14 +16,14 @@ Descption:
 Minimum Requirements:
 
 Adjust angle and initial velocity of projectile
-Movable tanks
+Movable tanks (completed)
 Tank damage monitor
 
 Additional Features:
 
-Randomly generated terrain
-Destroyable terrain
-Zoomed view (scrollable)
+Randomly generated terrain (completed)
+Destroyable terrain (completed)
+Zoomed view / scrollable (completed)
 Different Weapons
 Multiple tanks per team
 Tank 'power ups'
