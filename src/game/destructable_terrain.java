@@ -33,10 +33,10 @@ public void setup() {
       frame.setTitle("Tank Wars");
   }
   
-  // load our images for terrain and background
+  // load our background image and generate terrain
   bg = loadImage("bg/sky-blurry.png");
   
-  terrain = new Terrain(loadImage("maps/more-trees.png"), 2); // new Terrain(image, destructionRes)
+  terrain = new Terrain(2); // new Terrain(destructionRes)
   
   // initialize the physics and rendering engines
   physics = new Physics();
@@ -106,7 +106,7 @@ class Bullet implements PhysicsObj, RenderObj {
     if (collision.length > 0) {
       renderer.remove(this);
       physics.remove(this);
-      explode(collision[2], collision[3], 60);
+      explode(collision[2], collision[3], 50);
     }
     lastX = x;
     lastY = y;
@@ -780,7 +780,7 @@ class Terrain {
   int destructionRes; // how wide is a static pixel
   
   // Constructor
-  Terrain(PImage pic, int destructionRes) {
+  Terrain(int destructionRes) {
     this.destructionRes = destructionRes;
 
     plus = 0;
