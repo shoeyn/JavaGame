@@ -5,64 +5,62 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
-public class Tank1{
-	
-// make a public boolean that tell us which tank i s currently locked
-public static boolean tank1Locked = false;
-int x, dx, y;
+public class Tank2{
+int x2, dx2, y2;
 Image image;
 
-	public Tank1(){
-		ImageIcon i = new ImageIcon("res/tank1.png");
+	public Tank2(){
+		ImageIcon i = new ImageIcon("res/tank2.png");
 		image = i.getImage();
-		x = 100;
-		y = 474;
+		x2 = 650;
+		y2 = 474;
 	}
 	
+	// moves the object
 	public void move(){
-		x += dx;
+		x2 += dx2;
 
 	}
 	
 	public int getX(){
-		return this.x;
+		return this.x2;
 	}
 	
 	public int getY(){
-		return this.y;
+		return this.y2;
 	}
 	
 	public Image getImage(){
 		return this.image;
 	}
 	
+	// when a key is pressed, depending on whether tank1 is locked we move either tank1 or tank2. the same goes for keyReleased
 	public void keyPressed(KeyEvent e){
 		int key = e.getKeyCode();
-		
 		if(key == KeyEvent.VK_SPACE)
-			if(tank1Locked)
-				tank1Locked = false;
+			if(Tank1.tank1Locked)
+				Tank1.tank1Locked = false;
 			else
-				tank1Locked = true;
+				Tank1.tank1Locked = true;
 		if(key == KeyEvent.VK_LEFT) 
-			if(x<0)
-				dx = 0;
+			if(x2<0)
+				dx2 = 0;
 			else
-				dx = -1;
+				dx2 = -1;
 		if(key == KeyEvent.VK_RIGHT)
-			if(x>730)
-				dx = 0;
+			if(x2>730)
+				dx2 = 0;
 			else
-				dx = 1;
+				dx2 = 1;
 	}
 	
 	public void keyReleased(KeyEvent e){
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_LEFT) 
-			dx = 0;
+			dx2 = 0;
 		if(key == KeyEvent.VK_RIGHT)
-			dx = 0;
+			dx2 = 0;
 	}
 
 }
