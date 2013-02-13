@@ -9,7 +9,7 @@ Ivelina Mincheva
 Joyce Day-Hall
 Jordan Hristov
 
-Descption:
+Description:
 
 2-player projectile shooting game
 
