@@ -43,7 +43,7 @@ public void setup() {
   renderer = new Renderer();
  
   // create the player
-  player = new Player(100,100);
+  player = new Player(300,300);
   physics.add(player);
   renderer.add(player);
 }
